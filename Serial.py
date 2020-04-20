@@ -1,1 +1,2 @@
 print("Serial")
+print("RPi")
