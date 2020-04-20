@@ -3,27 +3,22 @@ import time
 
 ser = serial.Serial("/dev/tty.usbmodem14101")    # open serial port
 time.sleep(1)
-print(ser.name)         # check which port was really used
+print("Port :", ser.name)         # check which port was really used
 
 
 # Functions
-def cmd(command):
-    command_str = command + "\r\n"
-    return ser.write(command_str.encode())
-
-
 def read():
     return ser.readline().decode()
 
 
-# Set Max Speed
-ser.write(cmd("0,M,200"))
-ser.write("1,M,220\r\n".encode())
+# Go To 1800
+ser.write("0,G,100\r\n".encode())
+ser.write("1,G,100\r\n".encode())
 
-# Read Max Speed
-ser.write("0,M\r\n".encode())
+# Read Position
+ser.write("0,P\r\n".encode())
 print("Max speed of Motor 0 :", read())
-ser.write("1,M\r\n".encode())
-print("Max speed of Motor 1 :", ser.readline().decode())
+ser.write("1,P\r\n".encode())
+print("Max speed of Motor 1 :", read())
 
 ser.close()  # close port
